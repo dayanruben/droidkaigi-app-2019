@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched2019.session.ui.store
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.github.droidkaigi.confsched2019.action.Action
 import io.github.droidkaigi.confsched2019.dispatcher.Dispatcher
+import io.github.droidkaigi.confsched2019.dispatcher.TestActionDispatcher
 import io.github.droidkaigi.confsched2019.dummySessionData
 import io.github.droidkaigi.confsched2019.ext.android.CoroutinePlugin
 import io.github.droidkaigi.confsched2019.ext.android.changedForever
@@ -11,8 +12,6 @@ import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
 import io.mockk.verifyOrder
-import io.mockk.verifySequence
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -23,7 +22,7 @@ class SessionContentsStoreTest {
 
     @Before fun setUp() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        CoroutinePlugin.mainDispatcherHandler = { Dispatchers.Default }
+        CoroutinePlugin.mainDispatcherHandler = { TestActionDispatcher() }
     }
 
     @Test fun loadingState() = runBlocking<Unit> {
