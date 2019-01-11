@@ -10,7 +10,7 @@ import io.github.droidkaigi.confsched2019.model.Announcement
 import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
-import io.mockk.verifySequence
+import io.mockk.verifyOrder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -35,7 +35,7 @@ class AnnouncementStoreTest {
         dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADING))
         dispatcher.dispatch(Action.AnnouncementLoadingStateChanged(LoadingState.LOADED))
 
-        verifySequence {
+        verifyOrder {
             observer(LoadingState.LOADING)
             observer(LoadingState.LOADED)
         }
@@ -52,7 +52,7 @@ class AnnouncementStoreTest {
             Action.AnnouncementLoaded(dummyAnnouncements)
         )
 
-        verifySequence {
+        verifyOrder {
             observer(emptyList())
             observer(dummyAnnouncements)
         }

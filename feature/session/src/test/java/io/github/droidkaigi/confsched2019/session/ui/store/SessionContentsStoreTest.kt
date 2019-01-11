@@ -10,6 +10,7 @@ import io.github.droidkaigi.confsched2019.model.LoadingState
 import io.github.droidkaigi.confsched2019.model.SessionContents
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
+import io.mockk.verifyOrder
 import io.mockk.verifySequence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -35,7 +36,7 @@ class SessionContentsStoreTest {
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADING))
         dispatcher.dispatch(Action.SessionLoadingStateChanged(LoadingState.LOADED))
 
-        verifySequence {
+        verifyOrder {
             observer(LoadingState.INITIALIZED)
             observer(LoadingState.LOADING)
             observer(LoadingState.LOADED)
@@ -53,7 +54,7 @@ class SessionContentsStoreTest {
             Action.SessionContentsLoaded(dummySessionContents)
         )
 
-        verifySequence {
+        verifyOrder {
             observer(SessionContents.EMPTY)
             observer(dummySessionContents)
         }
